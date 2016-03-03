@@ -1,4 +1,5 @@
-//同样发代币，注意与coin.sol的区别
+//标准代币例子，API符合标准要求 https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#token
+//注意与非标代币例子coin.sol的区别
 contract MyToken {
     /*公有成员变量 */
     string public name;    //代币名字
