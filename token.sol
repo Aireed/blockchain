@@ -3,7 +3,7 @@ contract MyToken {
     /*公有成员变量 */
     string public name;    //代币名字
     string public symbol;  //代币符号
-    uint8 public decimals; //小数位数
+    uint8 public decimals; //最小货币单位为小数点后几位
 
     /* 一个列表保存所有已发出的代币地址 */
     mapping (address => uint256) public balanceOf;
