@@ -1,4 +1,5 @@
 //一个简单代币合约例子 2016-3-1
+//注：此例子不符合标准代币API要求，标准代币例子参见token.sol  https://github.com/ethereum/wiki/wiki/Standardized_Contract_APIs#token
 contract Coin {
 //关键字“public”使变量能从合约外部访问。
     address public minter;
