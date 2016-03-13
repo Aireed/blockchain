@@ -116,4 +116,15 @@ contract Ballot
             }
         }
     }
+    
+    /**********
+     Standard kill() function to recover funds 
+     **********/
+    
+    function kill()
+    { 
+        if (msg.sender == chairperson)
+            suicide(chairperson);  // kills this contract and sends remaining funds back to creator
+    }
+    
 }
