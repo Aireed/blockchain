@@ -1,4 +1,6 @@
 /// @title Voting with delegation.
+///注：创建时，构造函数要求输入投票选项列表，在mist中只能是数字数组形式如［2,3,4］
+/// 注：在mist中，只有创建者账号或钱包合约地址才能调方法，否则会报gas超限
 contract Ballot
 {
     // This declares a new complex type which will
