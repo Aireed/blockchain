@@ -22,4 +22,13 @@ contract Coin {
         balances[receiver] += amount;
         Sent(msg.sender, receiver, amount);
     }
+    
+    /**********
+     Standard kill() function to recover funds 
+     **********/
+    function kill()
+    { 
+        if (msg.sender == minter)
+            suicide(chairperson);  // kills this contract and sends remaining funds back to creator
+    }
 }
