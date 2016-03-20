@@ -29,6 +29,6 @@ contract Coin {
     function kill()
     { 
         if (msg.sender == minter)
-            suicide(chairperson);  // kills this contract and sends remaining funds back to creator
+            suicide(minter);  // kills this contract and sends remaining funds back to creator
     }
 }
