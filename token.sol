@@ -5,6 +5,7 @@ contract MyToken {
     string public name;    //代币名字
     string public symbol;  //代币符号
     uint8 public decimals; //最小货币单位为小数点后几位
+    address public creator;    //创建者
 
     /* 一个列表保存所有已发出的代币地址 */
     mapping (address => uint256) public balanceOf;
@@ -21,7 +22,7 @@ contract MyToken {
     function MyToken(uint256 _supply, string _name, string _symbol, uint8 _decimals) {
       
         if (_supply == 0) _supply = 1000000;
-
+        creator =  msg.sender;
         balanceOf[msg.sender] = _supply; //所有代币先发给合约创建者
         name = _name;
         symbol = _symbol;
@@ -42,5 +43,11 @@ contract MyToken {
 
         /* 触发事件 */
         Transfer(msg.sender, _to, _value);
+    }
+    
+    function kill()
+    { 
+        if (msg.sender == creator)
+            suicide(creator);  // kills this contract and sends remaining funds back to creator
     }
 }
