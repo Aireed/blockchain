@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>积分代币</title>
+    <link rel="stylesheet" href="../../assets/css/weui.min.css"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body ontouchstart>
+<div class="container" id="container">
+    <div class="hd" id="top">
+        <h1 class="page_title">代币兑换</h1>
+
+        <p class="page_desc">
+            我的以太币: <span id='ethBalance'>0.00</span>&nbsp;Ether
+        </p>
+    </div>
+    <div class="bd">
+        <div class="weui_cells">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>我的积分:</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <span id="lblMyCoins">0</span>&nbsp;CS$
+                </div>
+            </div>
+            <div class="weui_cell" id="lblPendingCoins" style="display: none;">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>待确认积分:</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <span id="pendingAmount">0</span>&nbsp;CS$
+                </div>
+            </div>
+        </div>
+        <div class="weui_cells_title">今日汇率</div>
+        <div class="weui_cells">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>买入价:</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <span id="lblBuyPrice">0</span>&nbsp;CS$/Ether
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>卖出价:</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <span id="lblSellPrice">0</span>&nbsp;CS$/Ether
+                </div>
+            </div>
+        </div>
+        <div class="weui_cells">
+            <div class="weui_cell weui_cell_select weui_select_before">
+                <div class="weui_cell_hd">
+                    <select class="weui_select" id="operation">
+                        <option value="1">买入</option>
+                        <option value="2">卖出</option>
+                    </select>
+                </div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input id="amount" class="weui_input" type="number"
+                           pattern="^[0-9]+$" placeholder="请输入交易的积分"/>
+                </div>
+                <div class="weui_cell_ft">
+                    <i class="weui_icon_warn"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="weui_btn_area">
+            <button class="weui_btn weui_btn_primary">确定</button>
+        </div>
+    </div>
+
+    <div class='bd' id="about" style="display: none;">
+        <article class="weui_article">
+            <h1>积分代币</h1>
+            <section>
+                <h2 class="title">什么是代币</h2>
+                <section>
+                    <p>代币, 即数字货币 - 由您掌控的数字资源的数额</p>
+                    <p>典型的代币就是比特币、以太币等，这些代币是内置在系统中的，所以称为“内置”或“原生”区块链代币</p>
+                    <p>该积分代币是由51chain.net发行的社区积分代币，除通过兑换、转让获取外，还可以通过在社区投稿、发帖等贡献获取积分</p>
+                </section>
+                <section>
+                    <p>&nbsp;</p>
+                </section>
+            </section>
+        </article>
+    </div>
+    <div class="weui_tabbar">
+        <a href="../../index.html" class="weui_tabbar_item weui_bar_item_on">
+            <div class="weui_tabbar_icon">
+                <img src="../../img/icon_home.png" alt="">
+            </div>
+            <p class="weui_tabbar_label">首页</p>
+        </a>
+        <a href="#top" class="weui_tabbar_item weui_bar_item_on" onclick="$('#about').hide();">
+            <div class="weui_tabbar_icon">
+                <img src="../../img/icon_scorecoin.png" alt="">
+            </div>
+            <p class="weui_tabbar_label">兑换</p>
+        </a>
+
+        <a href="#about" onclick="$('#about').show();" class="weui_tabbar_item weui_bar_item_on">
+            <div class="weui_tabbar_icon">
+                <img src="../../img/icon_about.png" alt="">
+            </div>
+            <p class="weui_tabbar_label">关于</p>
+        </a>
+    </div>
+</div>
+<hr/>
+<div id="loadingToast" class="weui_loading_toast" style="display:none;">
+    <div class="weui_mask_transparent"></div>
+    <div class="weui_toast">
+        <div class="weui_loading">
+            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+        </div>
+        <p class="weui_toast_content">交易确认中...</p>
+    </div>
+</div>
+<script src="../../assets/js/shims/es6-shim.min.js"></script>
+<script src="../../assets/js/juicer/juicer-min.js"></script>
+<script src="../../assets/js/zepto/zepto.min.js"></script>
+<script src="../../assets/js/router.min.js"></script>
+<script src="../../assets/js/eth/ethereumjs-all.min.js"></script>
+<script src="../../assets/js/eth/web3/web3.min.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+<script src="Exchange.js"></script>
+</body>
+</html>

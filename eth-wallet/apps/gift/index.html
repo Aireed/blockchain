@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>讨红包</title>
+    <link rel="stylesheet" href="../../assets/css/weui.min.css"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <style>
+        @media (min-width: 768px) {
+            .hd {width:50%;margin:0 auto;}
+            .bd {width:50%;margin:0 auto;}
+        }
+    </style>
+</head>
+<body ontouchstart>
+<div class="container" id="container">
+
+    <div class="hd">
+        <h2 class="page_title"><img width="100%" src="askgift.jpg"/>
+        </h2>
+    </div>
+    <div class="bd spacing">
+        <button class="weui_btn weui_btn_warn" id="btnAsk4Gift" onclick="askForGift();">要个红包</button>
+    </div>
+    <div class="bd">
+        <div class="weui_cells" id="divGiftLogs">
+        </div>
+    </div>
+    <div class="weui_tabbar">
+        <a href="../../index.html" class="weui_tabbar_item weui_bar_item_on">
+            <div class="weui_tabbar_icon">
+                <img src="../../img/icon_home.png" alt="">
+            </div>
+            <p class="weui_tabbar_label">首页</p>
+        </a>
+        <a href="javascript:;" onclick="loadGiftLogs();" class="weui_tabbar_item weui_bar_item_on">
+            <div class="weui_tabbar_icon">
+                <img src="../../img/icon_history.png" alt="">
+            </div>
+            <p class="weui_tabbar_label">红包记录</p>
+        </a>
+    </div>
+</div>
+<script language="JavaScript">
+    function askForGift() {
+        $.post('//rdcqii.hundsun.com/wallet/apps/gift/ask4gift.do', {'address': global.wallet.getAddressString()}, function (r, e) {
+            if (e == 'success') {
+                if (r.result == 'success') {
+                    $.alert('提示信息', '<i class="weui_icon_success"></i>&nbsp;' + r.message);
+                } else {
+                    $.alert('警告信息', '<i class="weui_icon_warn"></i>&nbsp;' + r.message);
+                }
+
+            } else {
+                $.alert('系统错误', e);
+            }
+        });
+    }
+    function loadGiftLogs() {
+        $('#divGiftLogs').html('<p>红包记录</p>');
+        $.getJSON('//rdcqii.hundsun.com/wallet/apps/gift/history.do?address=' + global.wallet.getAddressString(), function (r, e) {
+            if (e == 'success') {
+                var txs = r;
+                $('#divGiftLogs').html('');
+                var tpl = juicer($('#tpl_gift_log').html());
+                for (var i in txs) {
+                    var tx = txs[i];
+                    var dt = new Date(tx.time);
+                    var param = new Object();
+                    param.time = dt.toLocaleDateString() + " " + dt.getHours() + ':' + dt.getMinutes();
+                    param.amount = web3.fromWei(tx.amount, 'ether');
+
+                    $('#divGiftLogs').append(tpl.render(param));
+                }
+            } else {
+                $.alert('系统错误', e);
+            }
+        })
+    }
+</script>
+
+<script type="text/html" id="tpl_gift_log">
+    <div class="weui_cell">
+        <div class="weui_cell_bd weui_cell_primary">
+            <p>${time}</p>
+        </div>
+        <div class="weui_cell_ft">${amount}</div>
+    </div>
+</script>
+<script src="../../assets/js/shims/es6-shim.min.js"></script>
+<script src="../../assets/js/juicer/juicer-min.js"></script>
+<script src="../../assets/js/zepto/zepto.min.js"></script>
+<script src="../../assets/js/router.min.js"></script>
+<script src="../../assets/js/eth/ethereumjs-all.min.js"></script>
+<script src="../../assets/js/eth/web3/web3.min.js"></script>
+<script src="../../js/config.js"></script>
+<script src="../../js/utils.js"></script>
+</body>
+</html>
