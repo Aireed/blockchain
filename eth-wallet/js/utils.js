@@ -22,7 +22,7 @@ $.getContextPath = function getContextPath() {
     //Light use second path as root path
     if(document.location.hostname == 'light.hs.net') {
         var index = pathName.substr(8).indexOf("/");
-        var result = pathName.substr(0, index + 1);
+        var result = pathName.substr(0, index + 8);
         return result;
     }else {
         var index = pathName.substr(1).indexOf("/");
