@@ -366,10 +366,17 @@ $(function () {
  * 初始化钱包
  */
 function init_wallet() {
+    //1. process callback
+    var params = $.getRequestParams();
+    if(typeof params.callback == 'undefined' || params.callback ==null ) {
+        callbackURL = '../index.html';
+    }else {
+        callbackURL = '../apps/' + params.callback;
+    }
     // 1. get private key
     var pk = window.sessionStorage.getItem(global.network + '-pk');
     if (pk != null) {
-        window.location.href = '../index.html';
+        window.location.href = callbackURL;
         return;
     }
     var ko = window.localStorage.getItem(global.network + '-ko');
@@ -404,7 +411,7 @@ function login() {
             try {
                 var wallet = EthJS.Wallet.fromV3(ko, pwd);
                 window.sessionStorage.setItem(global.network + '-pk',wallet.getPrivateKeyString());
-                window.location.href = '../index.html';
+                window.location.href = callbackURL;
             }catch(e) {
                 $.alert('警告','<i class="weui_icon_warn"></i>钱包密码错误', function () {
                     window.location.href = '#login';
@@ -419,7 +426,31 @@ function login() {
  * 从备份恢复钱包
  */
 function restoreWallet() {
-    alert('restoreWallet');
+    debugger;
+    var v3str= $('#txtV3Wallet').val().trim();
+    if (v3str.length == 0) {
+        alert('钱包文件内容不能为空！');
+        return false;
+    }
+    var ko = null;
+    try {
+        ko = JSON.parse(v3str);
+    }catch(e) {
+        alert('钱包文件版本不正确，仅支持V3格式钱包！');
+        return false;
+    }
+
+    if(ko == null || ko.address==null || ko.version == null) {
+        alert('钱包文件格式错误！');
+        return false;
+    }
+    if(ko.version != 3 || ko.crypto==null) {
+        alert('钱包文件版本不正确，仅支持V3格式钱包！');
+        return false;
+    }
+    window.localStorage.setItem(global.network + '-ko',v3str);
+    window.location.href = '#login';
+
 }
 /**
  * 创建新钱包
@@ -434,10 +465,10 @@ function createNewWallet() {
         $('#dialog_new').hide();
         setTimeout(function () {
             var wallet = EthJS.Wallet.generate();
-            var ko = wallet.toV3String(pwd,global.scrypt.kdfparams);
+            var ko = wallet.toV3String(pwd,global.scrypt[global.network]);
             window.localStorage.setItem(global.network + '-ko',ko);
             window.sessionStorage.setItem(global.network + '-pk',wallet.getPrivateKeyString());
-            window.location.href = '../index.html';
+            window.location.href = callbackURL;
         }, 1500);
     }
 }
@@ -473,10 +504,10 @@ function onUploadFileChange(container) {
                     keyObject.crypto = keyObject.Crypto;
                 }
                 var wallet = EthJS.Wallet.fromV3(keyObject, password);
-                var ko = wallet.toV3String(password,global.scrypt.kdfparams);
+                var ko = wallet.toV3String(password,global.scrypt[global.network]);
                 window.localStorage.setItem(global.network + '-ko',ko);
                 window.sessionStorage.setItem(global.network + '-pk',wallet.getPrivateKeyString());
-                window.location.href = '../index.html';
+                window.location.href = callbackURL;
             }catch(e) {
                 $.alert('警告','<i class="weui_icon_warn"></i>钱包密码错误',function() {
                     window.location.href = '#restore';

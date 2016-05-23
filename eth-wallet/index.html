@@ -12,9 +12,8 @@
 
 <script type="text/template" id="tpl_home">
     <div class="hd">
-        <h1 class="page_title"><a href="#/"><img height="80px" src="./img/${network}.png"/></a>
+        <h1 class="page_title"><a href="javascript:$('#dialog_profile').show();"><img height="80px" src="./img/${network}.png"/></a>
         </h1>
-
         <p class="page_desc">
             我的以太币: <span id='ethBalance'>0.00</span>&nbsp;Ether&nbsp;(<a href="javascript:;">${network.toUpperCase()}</a>)
         </p>
@@ -22,7 +21,7 @@
     <div class="bd">
         <div class="weui_grids">
             {@each apps as app, index}
-            <a href="apps/${app.url}" class="weui_grid" data-toggle="modal" data-type="ajax">
+            <a href="apps/${app.url}" {@if app.login===true} onclick="return checkLogin();" {@/if} class="weui_grid" data-toggle="modal" data-type="ajax">
                 <div class="weui_grid_icon">
                     <img src="${app.icon}"/>
                     <i class="icon icon_button"></i>
@@ -64,8 +63,27 @@
             </div>
         </div>
     </div>
-</script>
+    <div class="weui_dialog_alert" id="dialog_profile" style="display: none;">
+        <div class="weui_mask"></div>
+        <div class="weui_dialog">
+            <div class="weui_dialog_hd"><strong class="weui_dialog_title">我的钱包</strong></div>
+            <div class="weui_dialog_bd">
+                <div class="weui_cells_title">${wallet.getAddressString()}</div>
+                <div class="weui_cells weui_cells_form">
+                    <div class="weui_cell">
+                        <div class="weui_cell_bd weui_cell_primary">
+                            <textarea class="weui_textarea" placeholder="钱包文件" rows="5" readonly="readonly" onclick="this.focus();this.select()">${keyObject}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="weui_dialog_ft">
+                <a href="javascript:;" onclick="$('#dialog_profile').off('click').hide();" class="weui_btn_dialog primary">确定</a>
+            </div>
+        </div>
+    </div>
 
+</script>
 <script src="assets/js/shims/es6-shim.min.js"></script>
 <script src="assets/js/juicer/juicer-min.js"></script>
 <script src="assets/js/zepto/zepto.min.js"></script>

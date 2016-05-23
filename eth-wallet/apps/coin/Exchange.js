@@ -4,6 +4,7 @@
 var watcher = null;
 var pendingAmount = 0;
 $(function() {
+
 	$.isValid = function() {
 		var result = true;
 		$.each($('input'), function(t, e) {
@@ -13,14 +14,11 @@ $(function() {
 					e.parentNode.parentNode.className += ' weui_cell_warn';
 					e.focus();
 					return false;
-					;
 				}
 			}
-			;
 		});
 		return result;
 	}
-
 	$('button').bind(
 					'click',
 					function() {

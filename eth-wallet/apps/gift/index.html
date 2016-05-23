@@ -34,7 +34,7 @@
             </div>
             <p class="weui_tabbar_label">首页</p>
         </a>
-        <a href="javascript:;" onclick="loadGiftLogs();" class="weui_tabbar_item weui_bar_item_on">
+        <a href="javascript:loadGiftLogs();" class="weui_tabbar_item weui_bar_item_on">
             <div class="weui_tabbar_icon">
                 <img src="../../img/icon_history.png" alt="">
             </div>
@@ -58,21 +58,18 @@
         });
     }
     function loadGiftLogs() {
-        $('#divGiftLogs').html('<p>红包记录</p>');
         $.getJSON('//rdcqii.hundsun.com/wallet/apps/gift/history.do?address=' + global.wallet.getAddressString(), function (r, e) {
             if (e == 'success') {
                 var txs = r;
-                $('#divGiftLogs').html('');
                 var tpl = juicer($('#tpl_gift_log').html());
                 for (var i in txs) {
                     var tx = txs[i];
                     var dt = new Date(tx.time);
-                    var param = new Object();
-                    param.time = dt.toLocaleDateString() + " " + dt.getHours() + ':' + dt.getMinutes();
-                    param.amount = web3.fromWei(tx.amount, 'ether');
-
-                    $('#divGiftLogs').append(tpl.render(param));
+                    tx.time = dt.toLocaleDateString() + " " + dt.getHours() + ':' + dt.getMinutes();
+                    tx.amount = web3.fromWei(tx.amount, 'ether');
                 }
+
+                $('#divGiftLogs').html(tpl.render({"txs":txs}));
             } else {
                 $.alert('系统错误', e);
             }
@@ -80,13 +77,15 @@
     }
 </script>
 
-<script type="text/html" id="tpl_gift_log">
+<script type="text/template" id="tpl_gift_log">
+    {@each txs as item,index}
     <div class="weui_cell">
         <div class="weui_cell_bd weui_cell_primary">
-            <p>${time}</p>
+            <p>${item.time}</p>
         </div>
-        <div class="weui_cell_ft">${amount}</div>
+        <div class="weui_cell_ft">${item.amount}</div>
     </div>
+    {@/each}
 </script>
 <script src="../../assets/js/shims/es6-shim.min.js"></script>
 <script src="../../assets/js/juicer/juicer-min.js"></script>
