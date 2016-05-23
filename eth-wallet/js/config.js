@@ -47,8 +47,13 @@ $(function () {
         var ko = JSON.parse(window.localStorage.getItem(global.network + '-ko'));
         if (ko == null) {
             //KeyObject也不存在，跳转到初始化
-            window.location.href = 'init/index.html';
-            return;
+            var path = document.location.pathname;
+            if(path.indexOf('/init/index.html')>0) {
+                return; //如果是初始化界面，不要执行跳转
+            }else {
+                window.location.href = 'init/index.html';
+                return;
+            }
         } else {
             //有KeyObject但是没有登录，使用Dummy代替钱包
             var DummyWallet = function (keyObject) {
