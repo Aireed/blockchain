@@ -361,6 +361,7 @@ window.addEventListener('click', init);
 $(function () {
     setTimeout(init_wallet, 10);
 });
+//以上是动画效果部分
 
 /**
  * 初始化钱包
@@ -369,7 +370,7 @@ function init_wallet() {
     //1. process callback
     var params = $.getRequestParams();
     if(typeof params.callback == 'undefined' || params.callback ==null ) {
-        callbackURL = '../index.html';
+        callbackURL = document.referrer;
     }else {
         callbackURL = '../apps/' + params.callback;
     }

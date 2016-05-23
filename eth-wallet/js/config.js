@@ -40,13 +40,17 @@ if (typeof global == 'undefined' || global == null) {
 }
 
 $(function () {
+    //判断是否已经登录（已经获得私钥）
     var pk = window.sessionStorage.getItem(global.network + '-pk');
     if (pk == null || pk == undefined) {
+        //未获得私钥, 检查KeyObject是否存在
         var ko = JSON.parse(window.localStorage.getItem(global.network + '-ko'));
         if (ko == null) {
+            //KeyObject也不存在，跳转到初始化
             window.location.href = 'init/index.html';
             return;
         } else {
+            //有KeyObject但是没有登录，使用Dummy代替钱包
             var DummyWallet = function (keyObject) {
                 this.ko = keyObject;
                 this.getAddressString = function () {
@@ -63,6 +67,7 @@ $(function () {
             global.wallet = wallet;
         }
     } else {
+        //创建钱包实例
         var wallet = EthJS.Wallet.fromPrivateKey(EthJS.Util.toBuffer(pk, 'hex'));
         global.wallet = wallet;
     }
@@ -82,6 +87,10 @@ function initWeb3JS() {
     }
     return web3;
 }
+/**
+ * 检查是否登录，如果应用APP的配置上设置了需要登录，会在跳转之前执行此方法
+ * @returns {boolean}
+ */
 function checkLogin() {
     if(global.wallet.getPrivateKey() == null) {
         document.location.href = "init/index.html#login?callback=coin/index.html";
