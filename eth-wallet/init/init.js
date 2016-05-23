@@ -371,6 +371,10 @@ function init_wallet() {
     var params = $.getRequestParams();
     if(typeof params.callback == 'undefined' || params.callback ==null ) {
         callbackURL = document.referrer;
+        if(callbackURL=="") {
+            //If user open init page directly, set callback to homepage
+            callbackURL = "../index.html";
+        }
     }else {
         callbackURL = '../apps/' + params.callback;
     }
@@ -386,6 +390,7 @@ function init_wallet() {
     $.loadTemplate('/common/loading');
     if (ko == null) {
         //If no keyobject
+        $.loadTemplate('login');
         $.loadTemplate('nav', function () {
             router.setDefault('nav').init();
         });
@@ -427,8 +432,7 @@ function login() {
  * 从备份恢复钱包
  */
 function restoreWallet() {
-    debugger;
-    var v3str= $('#txtV3Wallet').val().trim();
+     var v3str= $('#txtV3Wallet').val().trim();
     if (v3str.length == 0) {
         alert('钱包文件内容不能为空！');
         return false;
@@ -437,7 +441,7 @@ function restoreWallet() {
     try {
         ko = JSON.parse(v3str);
     }catch(e) {
-        alert('钱包文件版本不正确，仅支持V3格式钱包！');
+        alert('不是正确的钱包文件，请提供正确的V3格式钱包文件！');
         return false;
     }
 
@@ -450,7 +454,6 @@ function restoreWallet() {
         return false;
     }
     window.localStorage.setItem(global.network + '-ko',v3str);
-    window.location.href = '#login';
 
 }
 /**
