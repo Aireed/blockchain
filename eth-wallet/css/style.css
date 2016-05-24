@@ -229,7 +229,7 @@ body {
     padding: .75em 1em;
     border: 1px dashed #e60012;
     -webkit-user-select:element;
-    margin: 2em;
+    margin: 2em 0 0;
 }
 @media (min-width: 768px) {
     .weui_grid {width: 25%;}

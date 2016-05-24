@@ -1,7 +1,7 @@
 {
 	"project":"ethwallet",
-	"version":"0.0.12",
-	"desc":"以太坊轻钱包！！",
+	"version":"0.0.14",
+	"desc":"以太坊轻应用！！",
 	"release":{
 		"js/app.js":["js/config.js",
 			"js/utils.js"]
@@ -10,6 +10,6 @@
          "icons":{"screenshots":["icons/c.png","icons/d.png","icons/e.png"],"main":"icons/favicon.png"},
 				  "key":"",
 			"manifest_version":1,
-			"name_cn":"以太坊轻钱包"
+			"name_cn":"以太坊轻应用"
 	}
 }

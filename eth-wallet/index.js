@@ -18,7 +18,7 @@ $(function () {
  * Load sub app
  */
 function loadSubApps() {
-    $.getJSON('./apps/config-' + global.network + '.json', function (r, e) {
+    $.getJSON('./apps/config-' + global.network + '.json?v=' + global.version, function (r, e) {
         if (e == 'success') {
             var tpl = juicer($('#tpl_home').html());
             var homePage = tpl.render({"apps": r, "network": global.network,

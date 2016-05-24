@@ -12,6 +12,7 @@ if (typeof global == 'undefined' || global == null) {
     global = {
         network: network,
         remoteRPC: rpcAddress,
+        version: 14,
         pbkdf2: {
             kdf: "pbkdf2",
             cipher: "aes-128-ctr",
