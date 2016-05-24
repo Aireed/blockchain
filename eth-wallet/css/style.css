@@ -216,6 +216,21 @@ body {
     animation: b .25s forwards
 }
 
+.cparea{
+    text-align: center;
+    font-family: Microsoft Yahei;
+    margin: -2em 0 0;
+}
+.kwd{
+    display: inline-block;
+    color: #272727;
+    background-color: #fff;
+    font-size: 0.6875em;
+    padding: .75em 1em;
+    border: 1px dashed #e60012;
+    -webkit-user-select:element;
+    margin: 2em;
+}
 @media (min-width: 768px) {
     .weui_grid {width: 25%;}
 }

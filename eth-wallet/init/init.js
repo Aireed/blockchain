@@ -399,6 +399,7 @@ function init_wallet() {
         $.loadTemplate('nav');
         $.loadTemplate('login',function(){
             router.setDefault('login').init();
+            setTimeout(function() { $('#pwd_login_wallet').focus();},10);
         });
     }
 }

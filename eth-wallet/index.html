@@ -67,15 +67,14 @@
         <div class="weui_mask"></div>
         <div class="weui_dialog">
             <div class="weui_dialog_hd"><strong class="weui_dialog_title">我的钱包</strong></div>
-            <div class="weui_dialog_bd">
-                <div class="weui_cells_title">${wallet.getAddressString()}</div>
-                <div class="weui_cells weui_cells_form">
-                    <div class="weui_cell">
-                        <div class="weui_cell_bd weui_cell_primary">
-                            <textarea class="weui_textarea" placeholder="钱包文件" rows="5" readonly="readonly" onclick="this.focus();this.select()">${keyObject}</textarea>
-                        </div>
-                    </div>
+            <div class="weui_dialog_bd bd ">
+                <div class="weui_cells_title" style="margin-top:-0.6em;">${wallet.getAddressString()}</div>
+                <div class="cparea">
+                <div class="weui_cells_tips kwd" id="kwd">
+                    <span>${keyObject}</span>
                 </div>
+                </div>
+                <div class="weui_cells_tips">长按选择钱包内容</div>
             </div>
             <div class="weui_dialog_ft">
                 <a href="javascript:;" onclick="$('#dialog_profile').off('click').hide();" class="weui_btn_dialog primary">确定</a>
