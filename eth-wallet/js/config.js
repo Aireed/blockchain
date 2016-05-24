@@ -96,9 +96,9 @@ function initWeb3JS() {
  * 检查是否登录，如果应用APP的配置上设置了需要登录，会在跳转之前执行此方法
  * @returns {boolean}
  */
-function checkLogin() {
+function checkLogin(cburi) {
     if(global.wallet.getPrivateKey() == null) {
-        document.location.href = "init/index.html#login?callback=coin/index.html";
+        document.location.href = "init/index.html#login?callback=" + cburi;
         return false;
     }else {
         return true;

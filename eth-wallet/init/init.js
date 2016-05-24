@@ -376,7 +376,7 @@ function init_wallet() {
             callbackURL = "../index.html";
         }
     }else {
-        callbackURL = '../apps/' + params.callback;
+        callbackURL = '../' + params.callback;
     }
     // 1. get private key
     var pk = window.sessionStorage.getItem(global.network + '-pk');

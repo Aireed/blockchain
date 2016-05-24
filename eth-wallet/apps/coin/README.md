@@ -27,3 +27,10 @@
 1. 创建合约定义并获取合约实例
 2. 组织交易数据并签名
 3. 使用watch侦听交易状态变化
+
+## 合约信息
+ 地址: 0x81867a79f4939E77418696Bf363089F220a0368B 
+ 
+ ABI: [ScoreTokenContract.json](http://light.hs.net/apps/yi_tai_fang_qing_qian_bao-test/apps/coin/ScoreTokenContract.json)
+ 
+ 合约源码: [ScoreToken.sol](http://light.hs.net/apps/yi_tai_fang_qing_qian_bao-test/apps/coin/ScoreToken.sol)

@@ -1,2 +1,3 @@
-[{"name":"讨红包","url":"gift/index.html","icon":"apps/gift/askgift.jpg"},
- {"name":"积分","url":"coin/index.html","icon":"img/icon_scorecoin.png","login":true}]
+[{"name":"讨红包","url":"apps/gift/index.html","icon":"apps/gift/askgift.jpg"},
+ {"name":"积分","url":"apps/coin/index.html","icon":"img/icon_scorecoin.png","login":true},
+ {"name":"钱包备份","url":"javascript:$('#dialog_profile').show();","icon":"img/main.png"}]

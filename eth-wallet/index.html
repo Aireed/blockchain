@@ -21,7 +21,7 @@
     <div class="bd">
         <div class="weui_grids">
             {@each apps as app, index}
-            <a href="apps/${app.url}" {@if app.login===true} onclick="return checkLogin();" {@/if} class="weui_grid" data-toggle="modal" data-type="ajax">
+            <a href="${app.url}" {@if app.login===true} onclick="return checkLogin('${app.url}');" {@/if} class="weui_grid" data-toggle="modal" data-type="ajax">
                 <div class="weui_grid_icon">
                     <img src="${app.icon}"/>
                     <i class="icon icon_button"></i>
@@ -74,14 +74,21 @@
                     <span>${keyObject}</span>
                 </div>
                 </div>
-                <div class="weui_cells_tips">长按选择钱包内容</div>
+                <div class="weui_cells_tips">长按选择钱包内容并备份</div>
             </div>
             <div class="weui_dialog_ft">
                 <a href="javascript:;" onclick="$('#dialog_profile').off('click').hide();" class="weui_btn_dialog primary">确定</a>
             </div>
         </div>
     </div>
-
+    <div class="weui_tabbar">
+        <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on">
+            <div class="weui_tabbar_icon">
+                <img src="img/icon_about.png" alt="">
+            </div>
+            <p class="weui_tabbar_label">以太坊轻钱包(V0.12a)</p>
+        </a>
+    </div>
 </script>
 <script src="assets/js/shims/es6-shim.min.js"></script>
 <script src="assets/js/juicer/juicer-min.js"></script>
