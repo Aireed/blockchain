@@ -66,7 +66,7 @@ ctx.fillStyle = '#222';
 ctx.fillRect(0, 0, w, h);
 ctx.fillStyle = '#ccc';
 ctx.font = '50px Verdana';
-ctx.fillText('Calculating Nodes', w / 2 - ctx.measureText('Calculating Nodes').width / 2, h / 2 - 15);
+ctx.fillText('  ', w / 2 - ctx.measureText('Calculating Nodes').width / 2, h / 2 - 15);
 
 window.setTimeout(init, 4); // to render the loading screen
 
@@ -449,6 +449,10 @@ function restoreWallet() {
     if(ko == null || ko.address==null || ko.version == null) {
         alert('钱包文件格式错误！');
         return false;
+    }
+    if(ko.Crypto != null && ko.crypto == null) {
+        //Old Mist Version
+        ko.crypto = ko.Crypto;
     }
     if(ko.version != 3 || ko.crypto==null) {
         alert('钱包文件版本不正确，仅支持V3格式钱包！');

@@ -147,3 +147,43 @@ $.loadTemplate = function (url, cb) {
         }
     }
 }
+
+/**
+ * 发送交易
+ */
+$.sendTransaction = function (address, amount, payload, cb) {
+    var gasPrice = web3.eth.gasPrice;
+    var gasPriceHex = web3.toHex(gasPrice);
+    var gasLimitHex = web3.toHex(300000);
+//	console.log('Current gasPrice: ' + gasPrice + ' OR ' + gasPriceHex);
+    var nonce = web3.eth.getTransactionCount(global.wallet.getAddressString());
+    var nonceHex = web3.toHex(nonce);
+
+    var rawTx = {
+        nonce : nonceHex,
+        gasPrice : gasPriceHex,
+        gasLimit : gasLimitHex,
+        to : address,
+        from : global.wallet.getAddressString(),
+        value : web3.toHex(amount)
+    };
+    if (payload != undefined && payload != null) {
+        rawTx.data = payload;
+    }
+    console.log('Build Transaction: ' + JSON.stringify(rawTx,' ','\t'));
+    var tx = new EthJS.Tx(rawTx);
+    try{
+        tx.sign(global.wallet.getPrivateKey());
+    }catch(e) {
+        alert(e);
+        return false;
+    }
+    var serializedTx = tx.serialize();
+    console.log('Sign Transaction: ' + serializedTx.toString('hex'));
+    console.log("Send Transaction");
+    if(typeof cb == 'function') {
+        return web3.eth.sendRawTransaction(serializedTx.toString('hex'),cb);
+    }else {
+        return web3.eth.sendRawTransaction(serializedTx.toString('hex'));
+    }
+}

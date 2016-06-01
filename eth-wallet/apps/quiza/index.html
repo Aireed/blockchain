@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>牛雄争霸A</title>
+    <link rel="stylesheet" href="../../assets/css/weui.min.css?v=0.1"/>
+    <link rel="stylesheet" href="../../css/style.css?v=0.2"/>
+</head>
+<body ontouchstart>
+<img id="coverImg" src="../../img/icon_QuizH.png" width="100%">
+<div class="container" id="container">
+    <div class="cell" >
+        <div class="hd">
+            <h1 class="page_title">牛熊争霸A</h1>
+            <p class="page_desc">
+                <span id='targetInfo'></span>&nbsp;
+            </p>
+        </div>
+        <div class="bd" >
+            <div class="weui_cells_title">标的信息</div>
+            <div class="weui_cells">
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>交易日</p>
+                    </div>
+                    <div id="targetDate" class="weui_cell_ft"></div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>盘口状态</p>
+                    </div>
+                    <div id="targetStatus" class="weui_cell_ft"></div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>前收盘</p>
+                    </div>
+                    <div id="targetPreClose" class="weui_cell_ft"></div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <p>今收盘</p>
+                    </div>
+                    <div id="targetClose" class="weui_cell_ft"></div>
+                </div>
+            </div>
+            <hr/>
+            <div class="weui_cells_title">盘口</div>
+            <div class="weui_cells">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">买涨</label></div>
+                    <div class="weui_cell_bd weui_cell_primary amount"><span id="sumAmountBetUp"></span> Ether
+                    </div>
+                    <div class="weui_cell_ft"><span id="countBetUp"></span> 人</div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">买跌</label></div>
+                    <div class="weui_cell_bd weui_cell_primary amount"><span id="sumAmountBetDown"></span> Ether
+                    </div>
+                    <div class="weui_cell_ft"><span id="countBetDown"></span> 人</div>
+                </div>
+            </div>
+
+            <div class="weui_cells_title" id="mine">我的竞猜</div>
+            <div class="weui_cells">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">买涨</label></div>
+                    <div class="weui_cell_bd weui_cell_primary amount"><span id="myBetUp">0</span> Ether
+                    </div>
+                    <div class="weui_cell_ft"><span><a style="display:none;" name="btnBet" href="javascript:$('#betForm').show();$('input[name=txtAmount]')[0].focus();" onclick="javascript:$('input[name=radioAction]')[0].checked = true;" class="weui_btn weui_btn_warn">＋</a></span></div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">买跌</label></div>
+                    <div class="weui_cell_bd weui_cell_primary amount"><span id="myBetDown">0</span> Ether
+                    </div>
+                    <div class="weui_cell_ft"><span><a style="display:none;" name="btnBet" href="javascript:$('#betForm').show();$('input[name=txtAmount]')[0].focus();" onclick="javascript:$('input[name=radioAction]')[1].checked = true;" class="weui_btn weui_btn_primary">＋</a></span></div>
+                </div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">输赢</label></div>
+                    <div class="weui_cell_bd weui_cell_primary amount"><span id="myWin">0</span> Ether
+                    </div>
+                    <div class="weui_cell_ft"><span id="betResult"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="article" id="about" style="display:none;" >
+        <div class="hd">
+            <h1 class="page_title">说明</h1>
+        </div>
+        <div class="bd">
+            <article class="weui_article">
+                <h1>简介</h1>
+                <section>
+                    <p>牛熊争霸A - 是一款股指日线为标的预测游戏。玩家可以在开盘之前预测股指涨跌，如果预测成功，可以赢得奖池中的额度分配</p>
+                    <section>
+                        <h3>1.1 游戏规则</h3>
+                        <p>1) 股指收盘后1小时（16:00）后会开启一个下一交易日为标的的新盘，玩家可以提交自己对下一交易日的预测结果, 合约记录金额和提交时间</p>
+                        <p>2) 在标的交易日的下午13点，系统会封盘 - 停止接受新的预测</p>
+                        <p>3) 在标的日期的下午15:05(收盘后5分钟)，系统获取当日的收盘价并与上一交易日收盘价比较</p>
+                        <p>4) 预测错误的玩家投入金额会计入资金池，系统也会根据根据投注金额进行补贴</p>
+                        <p>5) 预测正确的玩家参与资金池的分配，资金按照玩家投入金额和提交预测的时间加权平均分配</p>
+                    </section>
+                    <section>
+                        <h3>1.2 奖池分配规则</h3>
+                        <p>1) 预测正确的玩家参与分配</p>
+                        <p>2) 奖池中的资金按照预测成功的投注金额和预测时间早晚加权平均分配：投入多者多得、预测早者多得</p>
+                        <p>3) 奖池资金分配公式：<br/>
+                        <img src="f1.png" width="100%"/></p>
+                        <p>4) 其中:<br/>
+                        <img src="f2.png" width="100%"/> </p>
+                        <p>同一账户多次准确预测，奖励金额累加计算</p>
+                        <p>预测正确方向的本金不计入奖池，并且会在清算后一并返回</p>
+                    </section>
+                </section>
+                <h1>系统补贴</h1>
+
+                <section>
+                    <section>
+                        <h3>2.1 什么是补贴</h3>
+                        <p>为鼓励参与，系统会根据玩家参与的金额适当补贴。补贴即系统会投入部分资金进入奖池并分配给所有赢家</p>
+                    </section>
+                    <section>
+                        <h3>2.2 系统补贴规则</h3>
+                        <p>系统补贴根据合计预测金额累计分阶段计算</p>
+                        <p>1) 金额 &lt;=10 Ether: 补贴总金额的50%</p>
+                        <p>2) 金额 10┈20 Ether: 补贴金额的25%</p>
+                        <p>3) 金额 20┈30 Ether: 补贴金额的12.5%</p>
+                        <p>4) 金额 30┈50 Ether: 无补贴</p>
+                        <p>5) 金额 &gt;50 Ether: 提成2%</p>
+                    </section>
+                    <section>
+                        <h3>2.3 补贴规则补充</h3>
+                        <p>补贴计算是阶段累进计算的，例如总金额为25Ether, 则补贴 = 10*50% + 10*25% + 5*12.5%；于此类推</p>
+                    </section>
+                </section>
+            </article>
+        </div>
+    </div>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+</div>
+<div class="weui_dialog_confirm" id="betForm" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">股指竞猜</strong></div>
+
+        <div class="weui_dialog_bd weui_cells weui_cells_radio">
+            <label class="weui_cell weui_check_label" for="x11">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>买涨</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <input type="radio" class="weui_check" name="radioAction" id="x11"  checked>
+                    <span class="weui_icon_checked"></span>
+                </div>
+            </label>
+            <label class="weui_cell weui_check_label" for="x12">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>买跌</p>
+                </div>
+                <div class="weui_cell_ft">
+                    <input type="radio" name="radioAction" class="weui_check" id="x12">
+                    <span class="weui_icon_checked"></span>
+                </div>
+            </label>
+            <div class="weui_cell">
+                <div class="weui_cell_hd"><label class="weui_label">金额</label></div>
+                <div class="weui_cell_bd weui_cell_primary">
+                    <input name="txtAmount" class="weui_input" onfocus="this.select();" type="number" pattern="[0-9]+" value="0.1" placeholder="请输入押注金额">
+                </div>
+            </div>
+        </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:$('#betForm').hide();" class="weui_btn_dialog default">取消</a>
+            <a href="javascript:$('#betForm').hide();" onclick="return submitBet();" class="weui_btn_dialog primary">确认</a>
+        </div>
+    </div>
+</div>
+<div id="loadingToast" class="weui_loading_toast" style="display:none;z-index:9999;">
+    <div class="weui_mask_transparent"></div>
+    <div class="weui_toast">
+        <div class="weui_loading">
+            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+        </div>
+        <p class="weui_toast_content">交易确认中...</p>
+    </div>
+</div>
+<div class="weui_tabbar">
+    <a href="../../index.html" class="weui_tabbar_item weui_bar_item_on">
+        <div class="weui_tabbar_icon">
+            <img src="../../img/icon_home.png" alt="">
+        </div>
+        <p class="weui_tabbar_label">首页</p>
+    </a>
+    <a name="navBetNow" href="#mine" class="weui_tabbar_item weui_bar_item_on">
+        <div class="weui_tabbar_icon">
+            <img src="../../img/icon_scorecoin.png" alt="">
+        </div>
+        <p class="weui_tabbar_label">立即竞猜</p>
+    </a>
+    <a name="navMine" href="#mine" onclick="$('#about').hide();" class="weui_tabbar_item weui_bar_item_on">
+        <div class="weui_tabbar_icon">
+            <img src="../../img/icon_adbook.png" alt="">
+        </div>
+        <p class="weui_tabbar_label">我的</p>
+    </a>
+
+
+    <a href="#about" onclick="$('#about').show();" class="weui_tabbar_item weui_bar_item_on">
+        <div class="weui_tabbar_icon">
+            <img src="../../img/icon_about.png" alt="">
+        </div>
+        <p class="weui_tabbar_label">帮助</p>
+    </a>
+</div>
+<script src="../../assets/js/shims/es6-shim.min.js?v=0.1"></script>
+<script src="../../assets/js/juicer/juicer-min.js?v=0.1"></script>
+<script src="../../assets/js/zepto/zepto.min.js?v=0.1"></script>
+<script src="../../assets/js/router.min.js?v=0.1"></script>
+<script src="../../assets/js/eth/ethereumjs-all.min.js?v=0.1"></script>
+<script src="../../assets/js/eth/web3/web3.min.js?v=0.1"></script>
+<script src="../../js/config.js?v=0.1"></script>
+<script src="../../js/utils.js?v=0.2"></script>
+<script src="./QuizA.js?v=0.2"></script>
+
+</body>
+</html>

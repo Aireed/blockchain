@@ -73,13 +73,22 @@ body {
 }
 
 .cell .page_title {
-    color: #225fba
+    color: #de7c23
 }
-
+.amount {
+    text-align:right;
+    padding-right: 2em;
+}
+.weui_cell_ft{
+    min-width: 2.8em;
+}
 .cell .bd {
     padding-bottom: 30px
 }
-
+.cell .weui_cells_title {
+    font-size:16px;
+    background-color: lightyellow;
+}
 .dialog .bd, .toast .bd {
     padding: 120px 15px 0
 }
@@ -97,7 +106,7 @@ body {
 }
 
 .article .page_title {
-    color: #de7c23
+    color: #3e24bd
 }
 
 .icons {

@@ -1,6 +1,6 @@
 {
 	"project":"ethwallet",
-	"version":"0.0.14",
+	"version":"0.0.16",
 	"desc":"以太坊轻应用！！",
 	"release":{
 		"js/app.js":["js/config.js",

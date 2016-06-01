@@ -4,6 +4,11 @@
 var watcher = null;
 var pendingAmount = 0;
 $(function() {
+	//Check Login
+	if(global.wallet.getPrivateKey() == null) {
+		document.location.href = "../../init/index.html#login";
+		return false;
+	}
 
 	$.isValid = function() {
 		var result = true;
@@ -104,8 +109,7 @@ function buy(ethAmount) {
 	return sendTransaction(coinContractInstance.address, ethAmount, payload);
 }
 
-/**
- * 卖出积分
+/** * 卖出积分
  */
 function sell(coinAmount) {
 	var payload = coinContractInstance.sell.getData(coinAmount);
