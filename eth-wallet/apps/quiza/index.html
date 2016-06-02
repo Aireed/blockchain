@@ -3,7 +3,7 @@
 <head lang="zh-CN">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>牛雄争霸A</title>
+    <title>牛熊争霸A</title>
     <link rel="stylesheet" href="../../assets/css/weui.min.css?v=0.1"/>
     <link rel="stylesheet" href="../../css/style.css?v=0.2"/>
 </head>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="weui_cell">
                     <div class="weui_cell_bd weui_cell_primary">
-                        <p>今收盘</p>
+                        <p id="lblTargetClose">今收盘</p>
                     </div>
                     <div id="targetClose" class="weui_cell_ft"></div>
                 </div>
@@ -65,13 +65,13 @@
             <div class="weui_cells_title" id="mine">我的竞猜</div>
             <div class="weui_cells">
                 <div class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label">买涨</label></div>
+                    <div class="weui_cell_hd"><label class="weui_label" id="lblBetUp">买涨</label></div>
                     <div class="weui_cell_bd weui_cell_primary amount"><span id="myBetUp">0</span> Ether
                     </div>
                     <div class="weui_cell_ft"><span><a style="display:none;" name="btnBet" href="javascript:$('#betForm').show();$('input[name=txtAmount]')[0].focus();" onclick="javascript:$('input[name=radioAction]')[0].checked = true;" class="weui_btn weui_btn_warn">＋</a></span></div>
                 </div>
                 <div class="weui_cell">
-                    <div class="weui_cell_hd"><label class="weui_label">买跌</label></div>
+                    <div class="weui_cell_hd"><label class="weui_label" id="lblBetDown">买跌</label></div>
                     <div class="weui_cell_bd weui_cell_primary amount"><span id="myBetDown">0</span> Ether
                     </div>
                     <div class="weui_cell_ft"><span><a style="display:none;" name="btnBet" href="javascript:$('#betForm').show();$('input[name=txtAmount]')[0].focus();" onclick="javascript:$('input[name=radioAction]')[1].checked = true;" class="weui_btn weui_btn_primary">＋</a></span></div>
@@ -101,6 +101,7 @@
                         <p>3) 在标的日期的下午15:05(收盘后5分钟)，系统获取当日的收盘价并与上一交易日收盘价比较</p>
                         <p>4) 预测错误的玩家投入金额会计入资金池，系统也会根据根据投注金额进行补贴</p>
                         <p>5) 预测正确的玩家参与资金池的分配，资金按照玩家投入金额和提交预测的时间加权平均分配</p>
+                        <p>6) 如果恰好平盘，则退还各自投入的金额（没有补贴）</p>
                     </section>
                     <section>
                         <h3>1.2 奖池分配规则</h3>
@@ -199,7 +200,7 @@
         <p class="weui_toast_content">交易确认中...</p>
     </div>
 </div>
-<div class="weui_tabbar">
+<div class="weui_tabbar" id="divTabbar" style="display: none;">
     <a href="../../index.html" class="weui_tabbar_item weui_bar_item_on">
         <div class="weui_tabbar_icon">
             <img src="../../img/icon_home.png" alt="">
@@ -235,7 +236,7 @@
 <script src="../../assets/js/eth/web3/web3.min.js?v=0.1"></script>
 <script src="../../js/config.js?v=0.1"></script>
 <script src="../../js/utils.js?v=0.2"></script>
-<script src="./QuizA.js?v=0.2"></script>
+<script src="./QuizA.js?v=0.4"></script>
 
 </body>
 </html>

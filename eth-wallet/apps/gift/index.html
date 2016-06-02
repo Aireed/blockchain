@@ -25,9 +25,23 @@
     </div>
     <div class="bd">
         <div class="weui_cells" id="divGiftLogs">
+            <article class="weui_article">
+                <section>
+                    <h2 class="title">红包说明</h2>
+                    <section>
+                        <p>在以太坊区块链进行合约操作需要花费以太币</p>
+                        <p>为了方便大家学习使用，该红包功能提供用户直接申领一定数量的以太币（测试币）</p>
+                        <p>每个地址每天只能申领一次，每天总共100个红包</p>
+                        <p class="weui_icon_safe_warn">该金额仅在测试链有效，不能在正式链使用</p>
+                    </section>
+                    <section>
+                        <p>&nbsp;</p>
+                    </section>
+                </section>
+            </article>
         </div>
     </div>
-    <div class="weui_tabbar">
+    <div class="weui_tabbar" id="div_tabbar">
         <a href="../../index.html" class="weui_tabbar_item weui_bar_item_on">
             <div class="weui_tabbar_icon">
                 <img src="../../img/icon_home.png" alt="">
@@ -65,6 +79,7 @@
 <script language="JavaScript">
     $(function () {
         $('button').bind('click',askForGift);
+        $('#div_tabbar').show();
     });
     function askForGift() {
         $.post('//rdcqii.hundsun.com/wallet/apps/gift/ask4gift.do', {'address': global.wallet.getAddressString()}, function (r, e) {

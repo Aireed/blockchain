@@ -21,7 +21,7 @@
     <div class="bd">
         <div class="weui_grids">
             {@each apps as app, index}
-            <a href="${app.url}" {@if app.login===true} onclick="return checkLogin('${app.url}');" {@/if} class="weui_grid" data-toggle="modal" data-type="ajax">
+            <a href="${app.url}" {@if app.login===true} style=" background-image:url('./img/mask-contract.png');background-repeat:no-repeat" onclick="return checkLogin('${app.url}');" {@/if} class="weui_grid" data-toggle="modal" data-type="ajax">
                 <div class="weui_grid_icon">
                     <img src="${app.icon}"/>
                     <i class="icon icon_button"></i>
@@ -82,11 +82,11 @@
         </div>
     </div>
     <div class="weui_tabbar">
-        <a href="javascript:$.alert('说明','以太坊轻钱包是一款基于以太坊区块链的H5轻应用，其中积分和竞猜是以太坊智能合约，页面只是提供了访问以太坊服务的界面，后台服务是在区块链上的智能合约');" class="weui_tabbar_item weui_bar_item_on">
+        <a href="javascript:$.alert('说明','<p>本应用是基于以太坊区块链的H5轻应用</p><p>其中积分和竞猜是以太坊智能合约，页面只是提供了访问以太坊服务的界面，后台服务逻辑及运行均在无中心、分布式的区块链上节点上运行</p><br/><p class=weui_icon_safe_warn>区块链的私钥仅存储在本地客户端，请务必备份好钱包</p>');" class="weui_tabbar_item weui_bar_item_on">
             <div class="weui_tabbar_icon">
                 <img src="img/icon_about.png" alt="">
             </div>
-            <p class="weui_tabbar_label">以太坊轻钱包(V0.16a)</p>
+            <p class="weui_tabbar_label">金链盟太坊轻应用示例(V0.20a)</p>
         </a>
     </div>
 </script>
@@ -98,6 +98,6 @@
 <script src="assets/js/eth/web3/web3.min.js?v=0.1"></script>
 <script src="./js/utils.js?v=0.1"></script>
 <script src="./js/config.js?v=0.1"></script>
-<script src="./index.js?v=0.1"></script>
+<script src="./index.js?v=0.2"></script>
 </body>
 </html>
