@@ -17,23 +17,25 @@ $(function () {
         document.location.href = "../../init/index.html#login";
         return false;
     }
-    // 1. 创建注册表合约
-    var registryContractABI = [{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"contracts","outputs":[{"name":"contractAddress","type":"address"},{"name":"code","type":"string"}],"type":"function"},{"constant":true,"inputs":[],"name":"size","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"next","outputs":[{"name":"newIndex","type":"uint256"},{"name":"contractAddress","type":"address"},{"name":"code","type":"string"}],"type":"function"},{"inputs":[],"type":"constructor"}];
-    var contract = web3.eth.contract(registryContractABI);
-    registry = contract.at(registries[global.network]);
-    var zero = web3.toBigNumber(0);
-    pendingAmount = [zero, zero, zero, 2];
-    //2. 取当前选择的合约缩影
+    //2. 取当前选择的合约索引
     contractIndex = window.localStorage.getItem("QuizAContractIndex");
     if (contractIndex == null) {
         contractIndex = 0; //If not set, use default instead
     }else {
         contractIndex = parseInt(contractIndex);
     }
+    $('#coverImg').attr('src','QuizA-' + contractIndex + '.jpg');
+
+    // 1. 创建注册表合约
+    var registryContractABI = [{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"contracts","outputs":[{"name":"contractAddress","type":"address"},{"name":"code","type":"string"}],"type":"function"},{"constant":true,"inputs":[],"name":"size","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"next","outputs":[{"name":"newIndex","type":"uint256"},{"name":"contractAddress","type":"address"},{"name":"code","type":"string"}],"type":"function"},{"inputs":[],"type":"constructor"}];
+    var contract = web3.eth.contract(registryContractABI);
+    registry = contract.at(registries[global.network]);
+    var zero = web3.toBigNumber(0);
+    pendingAmount = [zero, zero, zero, 2];
     setTimeout(function() {
         $('#coverImg').remove();
         $('#divTabbar').show();
-    },2200);
+    },contractIndex * 1000 + 2200);
     registry.contracts(contractIndex, function (e, r) { //Get current quiz contract address
         if (e == null) {
             var address = r[0];
@@ -132,12 +134,14 @@ function submitBet() {
     });
 }
 function reladInfo() {
-    var balance = web3.eth.getBalance(global.wallet.getAddressString());
-    if (!balance.eq(pendingAmount[0])) {
-        //Balance Changed
-        $('#loadingToast').hide();
-        pendingAmount = [balance, web3.toBigNumber(0), web3.toBigNumber(0)];
-        getMyBetInfo();
+    if(pendingAmount[1].gt(0) || pendingAmount[2].gt(0)) {
+        var balance = web3.eth.getBalance(global.wallet.getAddressString());
+        if (!balance.eq(pendingAmount[0])) {
+            //Balance Changed
+            $('#loadingToast').hide();
+            pendingAmount = [balance, web3.toBigNumber(0), web3.toBigNumber(0)];
+            getMyBetInfo();
+        }
     }
     getSummaryInfo();
 }
