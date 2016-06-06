@@ -7,7 +7,7 @@ var quizContractABI = [{"constant":true,"inputs":[],"name":"playerCount","output
 var quizContract;
 var Const_Status = {"0": '竞投中', "1": '已封盘', "2": '已收盘'};
 var registries = {"test": "0x8e65C683Cc8912cAcAE9bc515b38df51d2EEDF26","main": "0x0000000000000000000000000000000000000000"};
-var pendingAmount = [0, 0, 0, 2];
+var pendingAmount = [0, 0, 0, -1];
 var targetCode = null;
 var preClosePrice = 0;
 var contractStatus = 2;
@@ -31,7 +31,7 @@ $(function () {
     var contract = web3.eth.contract(registryContractABI);
     registry = contract.at(registries[global.network]);
     var zero = web3.toBigNumber(0);
-    pendingAmount = [zero, zero, zero, 2];
+    pendingAmount = [zero, zero, zero, -1];
     setTimeout(function() {
         $('#coverImg').remove();
         $('#divTabbar').show();

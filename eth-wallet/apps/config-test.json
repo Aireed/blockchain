@@ -1,4 +1,4 @@
 [{"name":"讨红包","url":"apps/gift/index.html?v=0.3","icon":"apps/gift/askgift.jpg"},
  {"name":"积分","url":"apps/coin/index.html","icon":"img/icon_scorecoin.png","login":true},
- {"name":"牛熊争霸A","url":"apps/quiza/index.html?v=0.4","icon":"img/icon_QuizA.png","login":true},
+ {"name":"牛熊争霸A","url":"apps/quiza/index.html?v=0.5","icon":"img/icon_QuizA.png","login":true},
  {"name":"钱包备份","url":"javascript:$('#dialog_profile').show();","icon":"img/main.png"}]
