@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>留言板</title>
+    <link rel="stylesheet" href="../../assets/css/weui.min.css?v=0.1"/>
+    <link rel="stylesheet" href="../../css/style.css?v=0.1"/>
+    <style>
+        .hd {
+            padding-bottom: 0px;
+            padding: 0 0;
+            min-height: 80px;
+            margin: 0 auto;
+        }
+
+        .bd {
+            background-size: 100%;
+            background-image: url("middle_01.png");
+            margin: -28px auto;
+            min-height: 280px;
+            padding-bottom:40px;
+        }
+
+        .weui_cells {
+            background-size: 100%;
+            background-image: url("middle_01.png");
+            padding-left: 10px;
+            padding-right: 18px;
+        }
+
+        .ft {
+            background-size: 100%;
+            background-image: url("bottom_02.png");
+            min-height: 46px;
+            margin: -16px auto;
+        }
+
+        .weui_cells_title {
+            font-weight: lighter;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .hd {
+                width: 50%;
+
+            }
+
+            .bd {
+                width: 50%;
+
+            }
+
+            .ft {
+                width: 50%;
+
+            }
+        }
+    </style>
+</head>
+<body ontouchstart>
+<div class="container" id="container">
+
+    <div class="hd"><img src="head.png" width="100%">
+    </div>
+    <div class="bd" id="_div_content">
+    </div>
+    <div class="ft">&nbsp;</div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+</div>
+<div class="weui_dialog_confirm" id="about" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">关于留言板</strong></div>
+        <div class="weui_dialog_bd">
+            <article class="weui_article">
+                <section>
+                    <p>留言板提供在区块链上留言功能；所有留言均永久记录在区块链，请勿发表不当言论</p>
+                    <p>区块链交易确认有一定时间，提交的留言需要大约在30秒之后才会被确认</p>
+                </section>
+            </article>
+        </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:$('#about').hide();" class="weui_btn_dialog default">取消</a>
+        </div>
+    </div>
+</div>
+<div class="weui_dialog_confirm" id="postForm" style="display:none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title">留言</strong></div>
+        <div class="weui_dialog_bd">
+            <textarea class="weui_textarea" rows="4"></textarea>
+        </div>
+        <div class="weui_dialog_ft">
+            <a href="javascript:$('#postForm').hide();" class="weui_btn_dialog default">取消</a>
+            <a href="javascript:$('#postForm').hide();" onclick="return submitPost();" class="weui_btn_dialog primary">确认</a>
+        </div>
+    </div>
+</div>
+
+<div id="loadingToast" class="weui_loading_toast" style="display:none;z-index:9999;">
+    <div class="weui_mask_transparent"></div>
+    <div class="weui_toast">
+        <div class="weui_loading">
+            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+        </div>
+        <p class="weui_toast_content">交易确认中...</p>
+    </div>
+</div>
+<div class="weui_tabbar">
+    <a href="../../index.html" class="weui_tabbar_item weui_bar_item_on">
+        <div class="weui_tabbar_icon">
+            <img src="../../img/icon_home.png" alt="">
+        </div>
+        <p class="weui_tabbar_label">首页</p>
+    </a>
+    <a href="javascript:$('textarea').focus();" onclick="$('#postForm').show();"
+       class="weui_tabbar_item weui_bar_item_on">
+        <div class="weui_tabbar_icon">
+            <img src="../../img/icon_board.jpg" alt="">
+        </div>
+        <p class="weui_tabbar_label">留言</p>
+    </a>
+
+    <a href="#about" onclick="$('#about').show();" class="weui_tabbar_item weui_bar_item_on">
+        <div class="weui_tabbar_icon">
+            <img src="../../img/icon_about.png" alt="">
+        </div>
+        <p class="weui_tabbar_label">关于</p>
+    </a>
+</div>
+<script type="text/template" id="tpl_message">
+    <div class="weui_cells">
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>${time}</p>
+            </div>
+            <div class="weui_cell_ft">${address}
+            </div>
+        </div>
+    </div>
+    <div class="weui_cells_title">${content}
+    </div>
+</script>
+<script src="../../assets/js/shims/es6-shim.min.js?v=0.1"></script>
+<script src="../../assets/js/juicer/juicer-min.js?v=0.1"></script>
+<script src="../../assets/js/zepto/zepto.min.js?v=0.1"></script>
+<script src="../../assets/js/zepto/touch.js?v=0.1"></script>
+<script src="../../assets/js/router.min.js?v=0.1"></script>
+<script src="../../assets/js/eth/ethereumjs-all.min.js?v=0.1"></script>
+<script src="../../assets/js/eth/web3/web3.min.js?v=0.2"></script>
+<script src="../../js/utils.js?v=0.1"></script>
+<script src="../../js/config.js?v=0.1"></script>
+<script language="JavaScript">
+    $(function () {
+        //Check Login
+        if (global.wallet.getPrivateKey() == null) {
+            document.location.href = "../../init/index.html#login";
+            return false;
+        }
+        var contract = web3.eth.contract([{
+            "constant": true,
+            "inputs": [],
+            "name": "count",
+            "outputs": [{"name": "", "type": "uint64"}],
+            "type": "function"
+        }, {
+            "constant": true,
+            "inputs": [{"name": "index", "type": "uint64"}],
+            "name": "read",
+            "outputs": [{"name": "from", "type": "address"}, {"name": "time", "type": "uint256"}, {
+                "name": "content",
+                "type": "string"
+            }],
+            "type": "function"
+        }, {
+            "constant": false,
+            "inputs": [{"name": "message", "type": "string"}],
+            "name": "post",
+            "outputs": [],
+            "type": "function"
+        }, {
+            "anonymous": false,
+            "inputs": [{"indexed": false, "name": "index", "type": "uint64"}],
+            "name": "NewMessage",
+            "type": "event"
+        }]);
+        // 获取合约实例
+        contractInstance = contract.at("0x6b9FeFD5EE9200aCb5ADF46CBa8394DdDc1FE15e");
+
+        //准备模版
+        tpl = juicer($('#tpl_message').html());
+
+        // 取当前消息计数
+        contractInstance.count(function (e, r) {
+            if (e == null) {
+                var count = r.toNumber();
+                start = count - 4;
+                if(start < 0) {
+                    start = 0;
+                }
+                for (var index = count; index > start; index--) {
+                    contractInstance.read(index, function (e, r) {
+                        if (e == null) {
+                            var address = r[0];
+                            if (address == global.wallet.getAddressString()) {
+                                address = '我';
+                            } else {
+                                address = address.substr(0, 8) + '**';
+                            }
+                            var d = new Date(r[1].toNumber() * 1000);
+                            var time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
+                            $('#_div_content').append(tpl.render({"address": address, "time": time, "content": r[2]}));
+                        }
+                    });
+                }
+                currentCount = count;
+                window.setInterval(checkNewMessage, 3000);
+                $('.ft').swipeDown(function() {
+                    if(start>0) {
+                        var new_start = start - 4;
+                        if(new_start < 0) {
+                            new_start = 0;
+                        }
+                        for (var index = start - 1; index >= new_start; index--) {
+                            contractInstance.read(index, function (e, r) {
+                                if (e == null) {
+                                    var address = r[0];
+                                    if (address == global.wallet.getAddressString()) {
+                                        address = '我';
+                                    } else {
+                                        address = address.substr(0, 8) + '**';
+                                    }
+                                    var d = new Date(r[1].toNumber() * 1000);
+                                    var time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
+                                    $('#_div_content').append(tpl.render({"address": address, "time": time, "content": r[2]}));
+                                    start = start - 1;
+                                }
+                            });
+                        }
+                    }
+                });
+
+            } else {
+                $.alert('网络错误', e);
+            }
+        });
+    });
+    //RPC的 Event Watch 调用HTTP太频繁了，改成应定时器调用
+    function checkNewMessage() {
+        contractInstance.count(function (e, r) {
+            if (e == null) {
+                var count = r.toNumber();
+                if (count > currentCount) {
+                    for (var index = currentCount + 1; index <= count; index++) {
+                        contractInstance.read(index, function (e2, r2) {
+                            if (e2 == null) {
+                                var address = r2[0];
+                                if (address == global.wallet.getAddressString()) {
+                                    address = '我';
+                                } else {
+                                    address = address.substr(0, 8) + '**';
+                                }
+                                var d = new Date(r2[1].toNumber() * 1000);
+                                var time = d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes();
+                                $('#_div_content').children().first().before(tpl.render({
+                                    "address": address,
+                                    "time": time,
+                                    "content": r2[2]
+                                }));
+                            }
+                        });
+                    }
+                    currentCount = count;
+                }
+            }
+        });
+    }
+    function submitPost() {
+        var payload = contractInstance.post.getData($('textarea').val());
+        $('#loadingToast').show();
+        return $.sendTransaction(contractInstance.address, 0, payload, function (e, r) {
+            if (e == null) {
+                setTimeout(function () {
+                    $('#loadingToast').hide();
+                }, 5000);
+            } else {
+                alert('系统错误:' + e);
+                $('#loadingToast').hide();
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

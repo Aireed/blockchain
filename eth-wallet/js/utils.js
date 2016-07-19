@@ -76,7 +76,7 @@ $.loadTemplate = function (url, cb) {
         });
     }
 
-    var tpl = router._getRoute(url);
+    var tpl = router._routes[url];
     if (tpl != null) {
         if(typeof cb == 'function') {
             setTimeout(cb,0);

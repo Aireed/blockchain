@@ -1,7 +1,7 @@
 /**
  * Created by tongsh on 2016/5/8.
  */
-_cache_enabled = false; //Local Cache Indicator
+_cache_enabled = true; //Local Cache Indicator
 //Global Config
 if (typeof global == 'undefined' || global == null) {
     var network = window.localStorage.getItem('network');
@@ -12,7 +12,7 @@ if (typeof global == 'undefined' || global == null) {
     global = {
         network: network,
         remoteRPC: rpcAddress,
-        version: 14,
+        version: 25,
         pbkdf2: {
             kdf: "pbkdf2",
             cipher: "aes-128-ctr",
@@ -42,6 +42,7 @@ if (typeof global == 'undefined' || global == null) {
 
 $(function () {
     //判断是否已经登录（已经获得私钥）
+
     var pk = window.sessionStorage.getItem(global.network + '-pk');
     if (pk == null || pk == undefined) {
         //未获得私钥, 检查KeyObject是否存在
@@ -52,7 +53,7 @@ $(function () {
             if(path.indexOf('/init/index.html')>0) {
                 return; //如果是初始化界面，不要执行跳转
             }else {
-                window.location.href = 'init/index.html';
+                window.location.href = $.getContextPath() + '/init/index.html';
                 return;
             }
         } else {

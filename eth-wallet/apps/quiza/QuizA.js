@@ -154,7 +154,7 @@ $(function () {
     $.get("http://light.hs.net/auth.json", function (r, e) {
         if (e == null || e == 'success') {
             access_token = r.access_token;
-            setInterval(refreshQuota, 3000);
+            setInterval(refreshQuota, 5000);
         }
     });
 });
@@ -429,7 +429,7 @@ function refreshQuota() {
     if (targetCode != null && typeof access_token != 'undefined') {
         var now = new Date();
         var hm = now.getHours() * 100 + now.getMinutes();
-        if ($('#targetClose').text() == '' || (hm > 930 && hm < 1740)) {
+        if ($('#targetClose').text() == '' || (hm > 930 && hm < 1505)) {
             //Only load first time or during trading time
             $.getJSON('http://open.hscloud.cn/quote/v1/real?en_prod_code=' + targetCode + '&fields=last_px&access_token=' + access_token, function (r, e) {
                 if (e == 'success') {
