@@ -23,3 +23,4 @@
     apps/gift:  讨红包（仅限测试链）
     apps/coin:  积分兑换
     apps/quiza: 牛熊争霸A
+    apps/board: 区块链留言板

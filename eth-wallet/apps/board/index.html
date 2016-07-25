@@ -122,7 +122,7 @@
             <div class="weui_loading_leaf weui_loading_leaf_10"></div>
             <div class="weui_loading_leaf weui_loading_leaf_11"></div>
         </div>
-        <p class="weui_toast_content">交易确认中...</p>
+        <p class="weui_toast_content">请稍候...</p>
     </div>
 </div>
 <div class="weui_tabbar">
@@ -132,7 +132,7 @@
         </div>
         <p class="weui_tabbar_label">首页</p>
     </a>
-    <a href="javascript:$('textarea').focus();" onclick="$('#postForm').show();"
+    <a href="javascript:;" onclick="onPostMessageMenu();"
        class="weui_tabbar_item weui_bar_item_on">
         <div class="weui_tabbar_icon">
             <img src="../../img/icon_board.jpg" alt="">
@@ -164,15 +164,16 @@
 <script src="../../assets/js/juicer/juicer-min.js?v=0.1"></script>
 <script src="../../assets/js/zepto/zepto.min.js?v=0.1"></script>
 <script src="../../assets/js/zepto/touch.js?v=0.1"></script>
-<script src="../../assets/js/router.min.js?v=0.1"></script>
+<script src="../../assets/js/router.min.js?v=0.2"></script>
 <script src="../../assets/js/eth/ethereumjs-all.min.js?v=0.1"></script>
 <script src="../../assets/js/eth/web3/web3.min.js?v=0.2"></script>
 <script src="../../js/utils.js?v=0.1"></script>
 <script src="../../js/config.js?v=0.1"></script>
 <script language="JavaScript">
     $(function () {
+        $('#loadingToast').show();
         //Check Login
-        if (global.wallet.getPrivateKey() == null) {
+        if (global.wallet.getAddressString() == null) {
             document.location.href = "../../init/index.html#login";
             return false;
         }
@@ -262,6 +263,7 @@
             } else {
                 $.alert('网络错误', e);
             }
+            $('#loadingToast').hide();
         });
     });
     //RPC的 Event Watch 调用HTTP太频繁了，改成应定时器调用
@@ -308,7 +310,14 @@
             }
         });
     }
-
+    function onPostMessageMenu() {
+        if (global.wallet.getPrivateKey() == null) {
+            document.location.href = "../../init/index.html#login";
+            return false;
+        }
+        $('#postForm').show();
+        $('textarea').focus();
+    }
 </script>
 </body>
 </html>

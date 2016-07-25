@@ -12,7 +12,7 @@ if (typeof global == 'undefined' || global == null) {
     global = {
         network: network,
         remoteRPC: rpcAddress,
-        version: 25,
+        version: 27,
         pbkdf2: {
             kdf: "pbkdf2",
             cipher: "aes-128-ctr",
@@ -42,7 +42,6 @@ if (typeof global == 'undefined' || global == null) {
 
 $(function () {
     //判断是否已经登录（已经获得私钥）
-
     var pk = window.sessionStorage.getItem(global.network + '-pk');
     if (pk == null || pk == undefined) {
         //未获得私钥, 检查KeyObject是否存在
