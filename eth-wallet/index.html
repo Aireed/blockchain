@@ -21,7 +21,7 @@
     <div class="bd">
         <div class="weui_grids">
             {@each apps as app, index}
-            <a href="${app.url}" {@if app.login===true} style=" background-image:url('./img/mask-contract.png');background-repeat:no-repeat" onclick="return checkLogin('${app.url}');" {@/if} class="weui_grid" data-toggle="modal" data-type="ajax">
+            <a href="${app.url}" {@if app.iscontract} style=" background-image:url('./img/mask-contract.png');background-repeat:no-repeat" {@/if} {@if app.login}onclick="return checkLogin('${app.url}');"  {@/if} class="weui_grid" data-toggle="modal" data-type="ajax">
                 <div class="weui_grid_icon">
                     <img src="${app.icon}"/>
                     <i class="icon icon_button"></i>
@@ -86,7 +86,7 @@
             <div class="weui_tabbar_icon">
                 <img src="img/icon_about.png" alt="">
             </div>
-            <p class="weui_tabbar_label">金链盟以太坊轻应用示例(V0.27a)</p>
+            <p class="weui_tabbar_label">金链盟以太坊轻应用示例(V0.28a)</p>
         </a>
     </div>
 </script>

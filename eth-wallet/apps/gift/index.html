@@ -41,23 +41,23 @@
             </article>
         </div>
     </div>
-    <div class="weui_tabbar" id="div_tabbar">
-        <a href="../../index.html" class="weui_tabbar_item weui_bar_item_on">
-            <div class="weui_tabbar_icon">
-                <img src="../../img/icon_home.png" alt="">
-            </div>
-            <p class="weui_tabbar_label">首页</p>
-        </a>
-        <a href="javascript:loadGiftLogs();" class="weui_tabbar_item weui_bar_item_on">
-            <div class="weui_tabbar_icon">
-                <img src="../../img/icon_history.png" alt="">
-            </div>
-            <p class="weui_tabbar_label">红包记录</p>
-        </a>
-    </div>
+
 </div>
 
-
+<div class="weui_tabbar" id="div_tabbar">
+    <a href="../../index.html" class="weui_tabbar_item weui_bar_item_on">
+        <div class="weui_tabbar_icon">
+            <img src="../../img/icon_home.png" alt="">
+        </div>
+        <p class="weui_tabbar_label">首页</p>
+    </a>
+    <a href="javascript:;" class="weui_tabbar_item weui_bar_item_on" onclick="javascript:loadGiftLogs();">
+        <div class="weui_tabbar_icon">
+            <img src="../../img/icon_history.png" alt="">
+        </div>
+        <p class="weui_tabbar_label">红包记录</p>
+    </a>
+</div>
 <script type="text/template" id="tpl_gift_log">
     {@each txs as item,index}
     <div class="weui_cell">
@@ -71,32 +71,35 @@
 <script src="../../assets/js/shims/es6-shim.min.js?v=0.1"></script>
 <script src="../../assets/js/juicer/juicer-min.js?v=0.1"></script>
 <script src="../../assets/js/zepto/zepto.min.js?v=0.1"></script>
-<script src="../../assets/js/router.min.js?v=0.2"></script>
 <script src="../../assets/js/eth/ethereumjs-all.min.js?v=0.1"></script>
 <script src="../../assets/js/eth/web3/web3.min.js?v=0.2"></script>
 <script src="../../js/utils.js?v=0.1"></script>
 <script src="../../js/config.js?v=0.1"></script>
 <script language="JavaScript">
     $(function () {
-        $('button').bind('click',askForGift);
-        $('#div_tabbar').show();
+        $('#btnAsk4Gift').bind('click',askForGift);
     });
     function askForGift() {
-        $.post('//rdcqii.hundsun.com/wallet/apps/gift/ask4gift.do', {'address': global.wallet.getAddressString()}, function (r, e) {
-            if (e == 'success') {
-                if (r.result == 'success') {
-                    $.alert('提示信息', '<i class="weui_icon_success"></i>&nbsp;' + r.message);
-                } else {
-                    $.alert('警告信息', '<i class="weui_icon_warn"></i>&nbsp;' + r.message);
-                }
+        try {
+            $.post('http://rdcqii.hundsun.com/wallet/apps/gift/ask4gift.do', {"address": global.wallet.getAddressString()}, function (r, e) {
+                if (e == 'success') {
+                    if (r.result == 'success') {
+                        $.alert('提示信息', '<i class="weui_icon_success"></i>&nbsp;' + r.message);
+                    } else {
+                        $.alert('警告信息', '<i class="weui_icon_warn"></i>&nbsp;' + r.message);
+                    }
 
-            } else {
-                $.alert('系统错误', e);
-            }
-        });
+                } else {
+                    alert('系统错误', e);
+                }
+            });
+        }catch(err) {
+            alert(err);
+        }
+
     }
     function loadGiftLogs() {
-        $.getJSON('//rdcqii.hundsun.com/wallet/apps/gift/history.do?address=' + global.wallet.getAddressString(), function (r, e) {
+        $.getJSON('http://rdcqii.hundsun.com/wallet/apps/gift/history.do?address=' + global.wallet.getAddressString(), function (r, e) {
             if (e == 'success') {
                 var txs = r;
                 var tpl = juicer($('#tpl_gift_log').html());
@@ -108,6 +111,7 @@
                 }
 
                 $('#divGiftLogs').html(tpl.render({"txs":txs}));
+                return true;
             } else {
                 $.alert('系统错误', e);
             }
