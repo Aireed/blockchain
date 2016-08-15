@@ -4,9 +4,6 @@
 //Global Config
 
 $(function () {
-    var path = document.location.pathname;
-    var rootContext = path.substring(0, path.lastIndexOf('/'));
-    window.localStorage.setItem('rootContext', rootContext);
     //1. Init Page
     loadSubApps();
     //2. Start timer to get balance
@@ -18,7 +15,7 @@ $(function () {
  * Load sub app
  */
 function loadSubApps() {
-    $.getJSON('./apps/config-' + global.network + '.json?v=' + global.version, function (r, e) {
+    $.getJSON('./app/config-' + global.network + '.json?v=' + global.version, function (r, e) {
         if (e == 'success') {
             var tpl = juicer($('#tpl_home').html());
             var homePage = tpl.render({"apps": r, "network": global.network,

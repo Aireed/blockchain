@@ -1,0 +1,5 @@
+[{"name":"积分","url":"app/coin/index.html","icon":"img/icon_scorecoin.png","login":true,"iscontract":true},
+ {"name":"牛熊争霸A","url":"app/quiza/index.html?v=0.6","icon":"img/icon_QuizA.png","login":true,"iscontract":true},
+ {"name":"留言板","url":"app/board/index.html?v=0.1","icon":"img/icon_board.jpg","iscontract":true},
+ {"name":"钱包备份","url":"javascript:$('#dialog_profile').show();","icon":"img/main.png"},
+ {"name":"讨红包","url":"app/gift/index.html?v=0.4","icon":"app/gift/askgift.jpg"}]

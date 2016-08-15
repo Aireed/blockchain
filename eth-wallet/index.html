@@ -86,9 +86,14 @@
             <div class="weui_tabbar_icon">
                 <img src="img/icon_about.png" alt="">
             </div>
-            <p class="weui_tabbar_label">金链盟以太坊轻应用示例(V0.28a)</p>
+            <p class="weui_tabbar_label">金链盟以太坊轻应用示例(V0.30a)</p>
         </a>
     </div>
+</script>
+<script language="JavaScript">
+    var path = document.location.pathname;
+    var rootContext = path.substring(0, path.lastIndexOf('/'));
+    window.localStorage.setItem('rootContext', rootContext);
 </script>
 <script src="assets/js/shims/es6-shim.min.js?v=0.1"></script>
 <script src="assets/js/juicer/juicer-min.js?v=0.1"></script>
@@ -97,7 +102,7 @@
 <script src="assets/js/eth/ethereumjs-all.min.js?v=0.1"></script>
 <script src="assets/js/eth/web3/web3.min.js?v=0.2"></script>
 <script src="./js/utils.js?v=0.1"></script>
-<script src="./js/config.js?v=0.1"></script>
+<script src="./js/config.js?v=0.2"></script>
 <script src="./index.js?v=0.2"></script>
 </body>
 </html>
