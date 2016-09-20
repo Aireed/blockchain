@@ -151,7 +151,7 @@ $(function () {
         document.addEventListener('touchstart', touchSatrtFunc, false);
         document.addEventListener('touchend', touchEndFunc, false);
     }
-    $.get("http://light.hs.net/auth.json", function (r, e) {
+    $.get("http://light.hscloud.cn/auth.json", function (r, e) {
         if (e == null || e == 'success') {
             access_token = r.access_token;
             setInterval(refreshQuota, 5000);

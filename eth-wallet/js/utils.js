@@ -20,7 +20,7 @@ $.getContextPath = function getContextPath() {
     var pathName = document.location.pathname;
 
     //Light use second path as root path
-    if(document.location.hostname == 'light.hs.net') {
+    if(document.location.hostname == 'light.hscloud.cn') {
         var index = pathName.substr(8).indexOf("/");
         var result = pathName.substr(0, index + 8);
         return result;
@@ -156,7 +156,7 @@ $.sendTransaction = function (address, amount, payload, cb) {
     var gasPriceHex = web3.toHex(gasPrice);
     var gasLimitHex = web3.toHex(300000);
 //	console.log('Current gasPrice: ' + gasPrice + ' OR ' + gasPriceHex);
-    var nonce = web3.eth.getTransactionCount(global.wallet.getAddressString());
+    var nonce = web3.eth.getTransactionCount(global.wallet.getAddressString(),'pending');
     var nonceHex = web3.toHex(nonce);
 
     var rawTx = {
